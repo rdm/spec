@@ -56,37 +56,30 @@ tests:
     data: { }
     template: "|\r\n{{>partial}}\r\n|"
     partials: { partial: ">" }
-    expected: "|\r\n>|"
+    expected: "|\r\n>\r\n|"
 
   - name: Standalone Without Previous Line
     desc: Standalone tags should not require a newline to precede them.
     data: { }
     template: "  {{>partial}}\n>"
     partials: { partial: ">\n>"}
-    expected: "  >\n  >>"
+    expected: "  >\n>\n>"
 
   - name: Standalone Without Newline
     desc: Standalone tags should not require a newline to follow them.
     data: { }
     template: ">\n  {{>partial}}"
     partials: { partial: ">\n>" }
-    expected: ">\n  >\n  >"
+    expected: ">\n  >\n>"
 
   - name: Standalone Indentation
-    desc: Each line of the partial should be indented before rendering.
+    desc: Each line of the partial should reproduced exactly, during rendering.
     data: { content: "<\n->" }
     template: |
-      \
-       {{>partial}}
-      /
+      \n\\\n {{>partial}}\n/
     partials: {'partial': '|\n{{{content}}}\n|\n'}
     expected: |
-      \
-       |
-       <
-      ->
-       |
-      /
+      \n\\\n |\n<\n->\n|\n\n/
 
   # Whitespace Insensitivity
 
