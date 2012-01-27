@@ -47,7 +47,7 @@ tests:
   - name: Surrounding Whitespace
     desc: The greater-than operator should not alter surrounding whitespace.
     data: { }
-    template: '| {{>partial}} |'
+    template: "| {{>partial}} |"
     partials: { partial: "\t|\t" }
     expected: "| \t|\t |"
 
@@ -106,4 +106,4 @@ tests:
     data: { boolean: true }
     template: "|{{> partial }}|"
     partials: { partial: "[]" }
-    expected: '|[]|'
+    expected: "|[]|"
