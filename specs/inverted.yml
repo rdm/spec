@@ -80,17 +80,17 @@ tests:
       * second
       * third
 
-  - name: Nested (Falsey)
-    desc: Nested falsey sections should have their contents rendered.
+  - name: Reuse test (Falsey)
+    desc: Falsey sections should be be useful multiple times
     data: { bool: false }
-    template: "| A {{^bool}}B {{^bool}}C{{/bool}} D{{/bool}} E |"
+    template: "| A {{^bool}}B {{/bool}}C{{^bool}} D{{/bool}} E |"
     expected: "| A B C D E |"
 
-  - name: Nested (Truthy)
-    desc: Nested truthy sections should be omitted.
+  - name: Reuse (Truthy)
+    desc: Truthy sections should be useful multiple times
     data: { bool: true }
-    template: "| A {{^bool}}B {{^bool}}C{{/bool}} D{{/bool}} E |"
-    expected: "| A  E |"
+    template: "| A {{^bool}}B {{/bool}}C{{^bool}} D{{/bool}} E |"
+    expected: "| A C E |"
 
   - name: Context Misses
     desc: Failed context lookups should be considered falsey.
