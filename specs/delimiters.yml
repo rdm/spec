@@ -23,7 +23,7 @@ tests:
   - name: Sections
     desc: Delimiters set outside sections should persist.
     data: { section: true, data: 'I got interpolated.' }
-    template: '[\n{{#section}}\n  {{data}}\n  |data|\n{{/section}}\n\n{{= | | =}}\n|#section|\n  {{data}}\n  |data|\n|/section|\n]\n'
+    template: '[\n{{?section}}\n  {{data}}\n  |data|\n{{/section}}\n\n{{= | | =}}\n|?section|\n  {{data}}\n  |data|\n|/section|\n]\n'
     expected: '[\n\n  I got interpolated.\n  |data|\n\n\n\n\n  {{data}}\n  I got interpolated.\n\n]\n'
 
   - name: Inverted Sections

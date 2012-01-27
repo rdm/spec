@@ -126,19 +126,19 @@ tests:
   - name: Dotted Names - Basic Interpolation
     desc: Dotted names should be considered a form of shorthand for sections.
     data: { person: { name: 'Joe' } }
-    template: '"{{person.name}}" == "{{#person}}{{name}}{{/person}}"'
+    template: '"{{person.name}}" == "{{?person}}{{name}}{{/person}}"'
     expected: '"Joe" == "Joe"'
 
   - name: Dotted Names - Triple Mustache Interpolation
     desc: Dotted names should be considered a form of shorthand for sections.
     data: { person: { name: 'Joe' } }
-    template: '"{{{person.name}}}" == "{{#person}}{{{name}}}{{/person}}"'
+    template: '"{{{person.name}}}" == "{{?person}}{{{name}}}{{/person}}"'
     expected: '"Joe" == "Joe"'
 
   - name: Dotted Names - Ampersand Interpolation
     desc: Dotted names should be considered a form of shorthand for sections.
     data: { person: { name: 'Joe' } }
-    template: '"{{&person.name}}" == "{{#person}}{{&name}}{{/person}}"'
+    template: '"{{&person.name}}" == "{{?person}}{{&name}}{{/person}}"'
     expected: '"Joe" == "Joe"'
 
   - name: Dotted Names - Arbitrary Depth
@@ -168,7 +168,7 @@ tests:
     data:
       a: { b: { c: { d: { e: { name: 'Phil' } } } } }
       b: { c: { d: { e: { name: 'Wrong' } } } }
-    template: '"{{#a}}{{b.c.d.e.name}}{{/a}}" == "Phil"'
+    template: '"{{?a}}{{b.c.d.e.name}}{{/a}}" == "Phil"'
     expected: '"Phil" == "Phil"'
 
   # Whitespace Sensitivity

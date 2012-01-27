@@ -38,19 +38,19 @@ tests:
   - name: Truthy
     desc: Truthy sections should have their contents rendered.
     data: { boolean: true }
-    template: '"{{#boolean}}This should be rendered.{{/boolean}}"'
+    template: '"{{?boolean}}This should be rendered.{{/boolean}}"'
     expected: '"This should be rendered."'
 
   - name: Falsey
     desc: Falsey sections should have their contents omitted.
     data: { boolean: false }
-    template: '"{{#boolean}}This should not be rendered.{{/boolean}}"'
+    template: '"{{?boolean}}This should not be rendered.{{/boolean}}"'
     expected: '""'
 
   - name: Context
     desc: Objects and hashes should be pushed onto the context stack.
     data: { context: { name: 'Joe' } }
-    template: '"{{#context}}Hi {{name}}.{{/context}}"'
+    template: '"{{?context}}Hi {{name}}.{{/context}}"'
     expected: '"Hi Joe."'
 
   - name: Deeply Nested Contexts
@@ -62,11 +62,11 @@ tests:
       d: { four: 4 }
       e: { five: 5 }
     template: |
-      {{#a}}{{one}}
-      {{#b}}{{one}}{{two}}{{one}}
-      {{#c}}{{one}}{{two}}{{three}}{{two}}{{one}}
-      {{#d}}{{one}}{{two}}{{three}}{{four}}{{three}}{{two}}{{one}}
-      {{#e}}{{one}}{{two}}{{three}}{{four}}{{five}}{{four}}{{three}}{{two}}{{one}}{{/e}}
+      {{?a}}{{one}}
+      {{?b}}{{one}}{{two}}{{one}}
+      {{?c}}{{one}}{{two}}{{three}}{{two}}{{one}}
+      {{?d}}{{one}}{{two}}{{three}}{{four}}{{three}}{{two}}{{one}}
+      {{?e}}{{one}}{{two}}{{three}}{{four}}{{five}}{{four}}{{three}}{{two}}{{one}}{{/e}}
       {{one}}{{two}}{{three}}{{four}}{{three}}{{two}}{{one}}{{/d}}
       {{one}}{{two}}{{three}}{{two}}{{one}}{{/c}}
       {{one}}{{two}}{{one}}{{/b}}
@@ -98,9 +98,9 @@ tests:
     desc: Multiple sections per template should be permitted.
     data: { bool: true, two: 'second' }
     template: |
-      {{#bool}}* first{{/bool}}
+      {{?bool}}* first{{/bool}}
       * {{two}}
-      {{#bool}}* third{{/bool}}
+      {{?bool}}* third{{/bool}}
     expected: |
       * first
       * second
@@ -109,19 +109,19 @@ tests:
   - name: Reuse (Truthy)
     desc: Truthy sections should be useful multiple times
     data: { bool: true }
-    template: "| A {{#bool}}B {{/bool}}C{{#bool}} D{{/bool}} E |"
+    template: "| A {{?bool}}B {{/bool}}C{{?bool}} D{{/bool}} E |"
     expected: "| A B C D E |"
 
   - name: Reuse (Falsey)
     desc: Multiple falsey sections with the same tag should all be omitted.
     data: { bool: false }
-    template: "| A {{#bool}}B {{/bool}}C{{#bool}} D{{/bool}} E |"
+    template: "| A {{?bool}}B {{/bool}}C{{?bool}} D{{/bool}} E |"
     expected: "| A C E |"
 
   - name: Context Misses
     desc: Failed context lookups should be considered falsey.
     data: { }
-    template: "[{{#missing}}Found key 'missing'!{{/missing}}]"
+    template: "[{{?missing}}Found key 'missing'!{{/missing}}]"
     expected: "[]"
 
   # Implicit Iterators
@@ -130,14 +130,14 @@ tests:
     desc: Implicit iterators should directly interpolate strings.
     data:
       list: [ 'a', 'b', 'c', 'd', 'e' ]
-    template: '"{{#list}}({{.}}){{/list}}"'
+    template: '"{{#list}}({{}}){{/list}}"'
     expected: '"(a)(b)(c)(d)(e)"'
 
   - name: Implicit Iterator - Integer
     desc: Implicit iterators should cast integers to strings and interpolate.
     data:
       list: [ 1, 2, 3, 4, 5 ]
-    template: '"{{#list}}({{.}}){{/list}}"'
+    template: '"{{#list}}({{}}){{/list}}"'
     expected: '"(1)(2)(3)(4)(5)"'
 
   - name: Implicit Iterator - Decimal
